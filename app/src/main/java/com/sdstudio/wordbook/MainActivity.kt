@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val adapter = PagerAdapter(supportFragmentManager)
-        adapter.addFragment(fragment1(), "My Word")
-        adapter.addFragment(fragment2(), "Setting")
+        adapter.addFragment(word_fragment(), "My Word")
+        adapter.addFragment(setting_fragment(), "Setting")
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
 

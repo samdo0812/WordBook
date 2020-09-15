@@ -3,13 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".fragment1">
+    android:background="#FFEB3B"
+    tools:context=".addword_fragment">
+
+    <EditText
+        android:id="@+id/myword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_word"
+        android:id="@+id/back"
         android:layout_width="376dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_create_black_24dp"
         />
+
+
 </FrameLayout>
