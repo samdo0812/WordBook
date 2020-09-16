@@ -23,14 +23,13 @@ class addword_fragment : Fragment() {
         val wordFragment = word_fragment()
 
         back.setOnClickListener {
-
             var myword = myword.toString()
             val bundle:Bundle = Bundle()
             bundle.putString("myword",myword)
 
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             wordFragment.arguments = bundle
-            transaction?.replace(R.id.ViewPager, word_fragment())
+            transaction?.replace(R.id.viewPager, word_fragment())
             transaction?.commit()
         }
 

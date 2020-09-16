@@ -1,5 +1,6 @@
 package com.sdstudio.wordbook
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +21,17 @@ class word_fragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         add_word.setOnClickListener {
+           /*
+            fragment -> fragment
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main, addword_fragment())
             transaction?.disallowAddToBackStack()
             transaction?.commit()
+            */
 
+            //fragment -> Activity
+            val intent = Intent(activity, addwordActivity::class.java)
+            startActivity(intent)
         }
         super.onActivityCreated(savedInstanceState)
     }
