@@ -1,7 +1,9 @@
 package com.sdstudio.wordbook
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = PagerAdapter(supportFragmentManager,2)
         viewPager.adapter = pagerAdapter
 
+       var intent = Intent()
+        Log.d("test", "if")
+        if (intent.hasExtra("plus_add")){
+            Log.d("test","test")
+        }
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -28,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                Log.d("test", "flag")
                 viewPager.currentItem = tab!!.position
             }
         })
