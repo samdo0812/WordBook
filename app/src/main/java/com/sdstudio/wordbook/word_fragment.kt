@@ -2,10 +2,12 @@ package com.sdstudio.wordbook
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_addword.*
 import kotlinx.android.synthetic.main.fragment_word.*
 
 class word_fragment : Fragment() {
@@ -20,14 +22,14 @@ class word_fragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
+
+        if (arguments!=null) {
+            arguments?.getString("newWord")
+            Log.d("test", "activity -> fragment")
+            Log.d("test", myword.toString())
+        }
+
         add_word.setOnClickListener {
-           /*
-            fragment -> fragment
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main, addword_fragment())
-            transaction?.disallowAddToBackStack()
-            transaction?.commit()
-            */
 
             //fragment -> Activity
             val intent = Intent(activity, addwordActivity::class.java)

@@ -16,14 +16,18 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText("My Word"))
         tabLayout.addTab(tabLayout.newTab().setText("Setting"))
 
+        Log.d("test", "if")
+        if (intent.hasExtra("plus_word")){
+            Log.d("test","MainActivity")
+            var newWord = intent.getStringExtra("plus_word")
+            Log.d("test",newWord)
+            val bundle:Bundle = Bundle()
+            bundle.putString("newWord",newWord)
+        }
         val pagerAdapter = PagerAdapter(supportFragmentManager,2)
         viewPager.adapter = pagerAdapter
 
-       var intent = Intent()
-        Log.d("test", "if")
-        if (intent.hasExtra("plus_add")){
-            Log.d("test","test")
-        }
+
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {

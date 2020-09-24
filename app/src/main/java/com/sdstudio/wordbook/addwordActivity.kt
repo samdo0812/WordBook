@@ -26,7 +26,7 @@ class addwordActivity : AppCompatActivity() {
 
             var intent = Intent(this, MainActivity::class.java)
             intent.putExtra("plus_word",plusword)
-            Log.d("test", plusword)
+            Log.d("addword activity - test", plusword)
             startActivity(intent)
         }
     }
