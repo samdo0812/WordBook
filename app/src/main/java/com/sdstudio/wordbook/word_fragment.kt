@@ -7,10 +7,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_addword.*
 import kotlinx.android.synthetic.main.fragment_word.*
 
 class word_fragment : Fragment() {
+
+    var new_word: String? = null
+    var modelList: String? = null
+
+    companion object { // (1) 제일 먼저 호출됨
+        @JvmStatic
+        fun newInstance(new_word: String) =
+            word_fragment().apply {
+                arguments = Bundle().apply {
+                    putString("new_word",new_word)
+                }
+            }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            modelList = it.getString("new_word")
+            test.setText(modelList)
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,14 +42,8 @@ class word_fragment : Fragment() {
         return view
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-
-
-        if (arguments!=null) {
-            arguments?.getString("newWord")
-            Log.d("test", "activity -> fragment")
-            Log.d("test", myword.toString())
-        }
 
         add_word.setOnClickListener {
 

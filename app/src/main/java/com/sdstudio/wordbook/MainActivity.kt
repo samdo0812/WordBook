@@ -9,23 +9,35 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var wordfragment: word_fragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tabLayout.addTab(tabLayout.newTab().setText("My Word"))
-        tabLayout.addTab(tabLayout.newTab().setText("Setting"))
-
         Log.d("test", "if")
         if (intent.hasExtra("plus_word")){
             Log.d("test","MainActivity")
-            var newWord = intent.getStringExtra("plus_word")
-            Log.d("test",newWord)
-            val bundle:Bundle = Bundle()
-            bundle.putString("newWord",newWord)
+            var new_Word = intent.getStringExtra("plus_word")
+            Log.d("test",new_Word)
+            Log.d("test","프래그먼트에 반영 쌉가능?")
+            wordfragment = word_fragment.newInstance(new_Word)
+
+            val pagerAdapter = PagerAdapter(supportFragmentManager)
+            pagerAdapter.addFragment(wordfragment,"My word")
+            pagerAdapter.addFragment(test_frgment(),"test")
+            pagerAdapter.addFragment(setting_fragment(),"setting")
+            viewPager.adapter = pagerAdapter
+            tabLayout.setupWithViewPager(viewPager)
+        }else{
+            val pagerAdapter = PagerAdapter(supportFragmentManager)
+            pagerAdapter.addFragment(word_fragment(),"My word")
+            pagerAdapter.addFragment(test_frgment(),"test")
+            pagerAdapter.addFragment(setting_fragment(),"setting")
+            viewPager.adapter = pagerAdapter
+            tabLayout.setupWithViewPager(viewPager)
+
         }
-        val pagerAdapter = PagerAdapter(supportFragmentManager,2)
-        viewPager.adapter = pagerAdapter
 
 
 

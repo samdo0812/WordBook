@@ -17,17 +17,21 @@ class addwordActivity : AppCompatActivity() {
         Log.d("test", "add word activity")
         addword.setOnClickListener {
 
+            //입력된 단어
             var plusword = plus_word.text.toString()
-            //val bundle:Bundle = Bundle()
-            //bundle.putString("plusword",plusword)
-            //supportFragmentManager.beginTransaction().replace(R.id.viewPager, wordFragment).commit()
-            //wordFragment.arguments = bundle
 
-
+            //경우1 addwordAcivity -> MainActivity
             var intent = Intent(this, MainActivity::class.java)
             intent.putExtra("plus_word",plusword)
             Log.d("addword activity - test", plusword)
             startActivity(intent)
+
+
+            //경우2 addwordActivity -> word_fragment
+            //val bundle:Bundle = Bundle()
+            //bundle.putString("plusword",plusword)
+            //wordFragment.arguments = bundle
+            //Log.d("addword activity - test", plusword)
         }
     }
 }
