@@ -4,12 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var wordfragment: word_fragment
+    lateinit var wordfragment: Fragment
+
+    val pagerAdapter = PagerAdapter(supportFragmentManager)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,22 +25,22 @@ class MainActivity : AppCompatActivity() {
             Log.d("test",new_Word)
             Log.d("test","프래그먼트에 반영 쌉가능?")
             wordfragment = word_fragment.newInstance(new_Word)
-
-            val pagerAdapter = PagerAdapter(supportFragmentManager)
-            pagerAdapter.addFragment(wordfragment,"My word")
-            pagerAdapter.addFragment(test_frgment(),"test")
-            pagerAdapter.addFragment(setting_fragment(),"setting")
-            viewPager.adapter = pagerAdapter
-            tabLayout.setupWithViewPager(viewPager)
-        }else{
-            val pagerAdapter = PagerAdapter(supportFragmentManager)
-            pagerAdapter.addFragment(word_fragment(),"My word")
-            pagerAdapter.addFragment(test_frgment(),"test")
-            pagerAdapter.addFragment(setting_fragment(),"setting")
-            viewPager.adapter = pagerAdapter
-            tabLayout.setupWithViewPager(viewPager)
-
+            pagerAdapter.addFragment(wordfragment, "My word")
+            pagerAdapter.addFragment(test_frgment(), "test")
+            pagerAdapter.addFragment(setting_fragment(), "setting")
+            //viewPager.adapter = pagerAdapter
+            //tabLayout.setupWithViewPager(viewPager)
         }
+        else {
+            Log.d("test", "어디어디서 호출되는지 확")
+            pagerAdapter.addFragment(word_fragment(), "My word")
+            pagerAdapter.addFragment(test_frgment(), "test")
+            pagerAdapter.addFragment(setting_fragment(), "setting")
+            //viewPager.adapter = pagerAdapter
+            //tabLayout.setupWithViewPager(viewPager)
+        }
+        viewPager.adapter = pagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
 
 
 

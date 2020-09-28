@@ -20,16 +20,30 @@ class word_fragment : Fragment() {
             word_fragment().apply {
                 arguments = Bundle().apply {
                     putString("new_word",new_word)
+                    Log.d("test",this.toString())
                 }
             }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            modelList = it.getString("new_word")
-            test.setText(modelList)
-        }
+        Log.d("test","언제 실행함?")
+
+        Log.d("test",arguments.toString())
+            //arguments?.getString("new_word")
+            //Log.d("test","word_fragment 데이터 들어왔니?")
+            //modelList = arguments?.getString("new_word")
+
+
+            //arguments?.getString("new_word").let { modelList = it }
+            //Log.d("test",modelList.toString())
+            //test.setText(modelList)
+
+        //if(arguments!=null){
+            //Log.d("test","word_fragment 데이터 들어왔니?")
+            //modelList = arguments?.getString("new_word")
+            //Log.d("test",modelList.toString())
+        //}
     }
 
 
