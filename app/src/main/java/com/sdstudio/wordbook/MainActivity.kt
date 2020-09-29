@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var wordfragment: Fragment
+    var bundle = Bundle()
 
     val pagerAdapter = PagerAdapter(supportFragmentManager)
 
@@ -18,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("test", "if")
         if (intent.hasExtra("plus_word")){
             Log.d("test","MainActivity")
             var new_Word = intent.getStringExtra("plus_word")
@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         }
         viewPager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(viewPager)
-
 
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
