@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("test","MainActivity")
             var new_Word = intent.getStringExtra("plus_word")
             Log.d("test",new_Word)
-            Log.d("test","프래그먼트에 반영 쌉가능?")
+            Log.d("test","프래그먼트에 반영 가능?")
             wordfragment = word_fragment.newInstance(new_Word)
             pagerAdapter.addFragment(wordfragment, "My word")
             pagerAdapter.addFragment(test_frgment(), "test")

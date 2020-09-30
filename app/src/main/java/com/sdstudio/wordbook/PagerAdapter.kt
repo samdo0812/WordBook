@@ -36,4 +36,6 @@ class PagerAdapter(fragmentmanager:FragmentManager) :FragmentPagerAdapter(fragme
     override fun getPageTitle(position: Int): CharSequence? {
         return mFragmentTitleList[position]
     }
+
+
 }

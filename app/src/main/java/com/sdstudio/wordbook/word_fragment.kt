@@ -11,8 +11,9 @@ import kotlinx.android.synthetic.main.fragment_word.*
 
 class word_fragment : Fragment() {
 
-    var new_word: String? = null
+
     var modelList: String? = null
+
 
     companion object { // (1) 제일 먼저 호출됨
         @JvmStatic
@@ -21,10 +22,12 @@ class word_fragment : Fragment() {
                 arguments = Bundle().apply {
                     putString("new_word",new_word)
                     Log.d("test",this.toString())
-                    //fragment를 반환
+                    //fragment를 반환?
                 }
             }
+
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
