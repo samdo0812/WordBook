@@ -8,6 +8,7 @@ class PagerAdapter(fragmentmanager:FragmentManager) :FragmentPagerAdapter(fragme
 
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()
+    private val mData = ArrayList<String>()
 
     override fun getItem(position: Int): Fragment {
         when(position){
@@ -32,6 +33,7 @@ class PagerAdapter(fragmentmanager:FragmentManager) :FragmentPagerAdapter(fragme
     fun addFragment(fragment: Fragment, title: String) {
         mFragmentList.add(fragment)
         mFragmentTitleList.add(title)
+        //mData.add(data)
     }
     override fun getPageTitle(position: Int): CharSequence? {
         return mFragmentTitleList[position]

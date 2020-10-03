@@ -24,21 +24,18 @@ class MainActivity : AppCompatActivity() {
             var new_Word = intent.getStringExtra("plus_word")
             Log.d("test",new_Word)
             Log.d("test","프래그먼트에 반영 가능?")
-            wordfragment = word_fragment.newInstance(new_Word)
-            pagerAdapter.addFragment(wordfragment, "My word")
-            pagerAdapter.addFragment(test_frgment(), "test")
-            pagerAdapter.addFragment(setting_fragment(), "setting")
-            //viewPager.adapter = pagerAdapter
-            //tabLayout.setupWithViewPager(viewPager)
         }
-        else {
+
+
+
+
             Log.d("test", "어디어디서 호출되는지 확")
             pagerAdapter.addFragment(word_fragment(), "My word")
             pagerAdapter.addFragment(test_frgment(), "test")
             pagerAdapter.addFragment(setting_fragment(), "setting")
             //viewPager.adapter = pagerAdapter
             //tabLayout.setupWithViewPager(viewPager)
-        }
+
         viewPager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(viewPager)
 
