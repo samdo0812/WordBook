@@ -22,6 +22,5 @@ class MainActivity : FragmentActivity() {
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
             tab.text = tabTitles[position]
         }.attach()
-
     }
 }
