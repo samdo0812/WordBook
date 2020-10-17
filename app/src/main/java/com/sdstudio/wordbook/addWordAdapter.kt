@@ -6,10 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.word_fragment_item.view.*
 
-//class addWordAdapter(val list: List <data>) : RecyclerView.Adapter<Holder>() {
-class addWordAdapter(val list: List<data>) : RecyclerView.Adapter<Holder>() {
-
-    lateinit var arrayList : Array<data>
+class addWordAdapter(val list: List <data>?) : RecyclerView.Adapter<Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context)
@@ -18,20 +15,17 @@ class addWordAdapter(val list: List<data>) : RecyclerView.Adapter<Holder>() {
     }
 
     override fun getItemCount(): Int {
-        //return arrayList.size
-        return list.size
+        return list!!.size
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        //val data = arrayList[position]
-        val data = list[position]
-        holder.setItem(data)
+        holder.bind(list!!.get(position),position)
     }
 }
 
 class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
-    fun setItem(data: data){
-        itemView.word.text = data.Word
-        itemView.mean.text = data.Mean
+    fun bind(data: data, position: Int){
+        itemView.word.setText(data.Word)
+        itemView.mean.setText(data.Mean)
     }
 }
