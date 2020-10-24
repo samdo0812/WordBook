@@ -3,10 +3,12 @@ package com.sdstudio.wordbook
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.add_word.*
@@ -20,12 +22,12 @@ import kotlin.math.log
 
 class word_fragment : Fragment() {
     //lateinit var addword:String
-    //lateinit var addmean:String
-    lateinit var adapter: addWordAdapter
+    //lateinit var addmean:String /
+     //lateinit var adapter: addWordAdapter
+     lateinit var adapter:addWordAdapter
+//    private val adapter: addWordAdapter by lazy { addWordAdapter() }
 
-    //fun setArrayList(list: ArrayList<data>){
-      //  this.list = list
-    //}
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +62,6 @@ class word_fragment : Fragment() {
 
                 //recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
                 //recyclerView.adapter = addWordAdapter(list)
-
                 adapter = addWordAdapter(list)
                 adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
@@ -74,6 +75,21 @@ class word_fragment : Fragment() {
                 myAlertDialog.dismiss()
             }
         }
+
+        search_bar.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                adapter.filter.filter(s)
+            }
+        } )
 
 
     }
