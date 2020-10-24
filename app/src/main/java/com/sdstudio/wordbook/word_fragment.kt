@@ -41,8 +41,9 @@ class word_fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val list = ArrayList<data>()
+        fab.attachToRecyclerView(recyclerView)
         //플로팅버튼
-        floatingButton.setOnClickListener {
+        fab.setOnClickListener {
             val mDialog = LayoutInflater.from(this.context).inflate(R.layout.add_word,null)
             val mbuilder = AlertDialog.Builder(this.context).setView(mDialog)
             val myAlertDialog = mbuilder.show()

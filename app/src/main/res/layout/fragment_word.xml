@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context=".word_fragment">
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,6 +24,18 @@
         android:scrollbars="vertical" />
 
 
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_add_24"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_colorRipple="@color/colorPrimaryDark" />
+
+<!--
    <com.github.clans.fab.FloatingActionMenu
        android:id="@+id/fab"
        android:layout_width="wrap_content"
@@ -43,5 +56,6 @@
         android:src="@drawable/ic_baseline_add_24"
         />
    </com.github.clans.fab.FloatingActionMenu>
+-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>
