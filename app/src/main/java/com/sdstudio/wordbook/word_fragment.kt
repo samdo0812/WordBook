@@ -2,12 +2,15 @@ package com.sdstudio.wordbook
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import kotlinx.android.synthetic.main.add_word.*
 import kotlinx.android.synthetic.main.add_word.view.*
 import kotlinx.android.synthetic.main.fragment_word.*
 import kotlinx.android.synthetic.main.fragment_word.view.*
+import kotlinx.android.synthetic.main.word_fragment_item.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -23,9 +27,12 @@ import kotlin.math.log
 class word_fragment : Fragment() {
     //lateinit var addword:String
     //lateinit var addmean:String /
-     //lateinit var adapter: addWordAdapter
-     lateinit var adapter:addWordAdapter
-//    private val adapter: addWordAdapter by lazy { addWordAdapter() }
+    //lateinit var adapter: addWordAdapter
+    lateinit var adapter: addWordAdapter
+
+
+
+    //    private val adapter: addWordAdapter by lazy { addWordAdapter() }
 
 
 
@@ -46,7 +53,7 @@ class word_fragment : Fragment() {
         fab.attachToRecyclerView(recyclerView)
         //플로팅버튼
         fab.setOnClickListener {
-            val mDialog = LayoutInflater.from(this.context).inflate(R.layout.add_word,null)
+            val mDialog = LayoutInflater.from(this.context).inflate(R.layout.add_word, null)
             val mbuilder = AlertDialog.Builder(this.context).setView(mDialog)
             val myAlertDialog = mbuilder.show()
 
@@ -57,7 +64,7 @@ class word_fragment : Fragment() {
 
                 //다이얼로그에 입력한 값
                 //list =  arrayListOf(data(addword,addmean))
-                list.add(data(addword,addmean))
+                list.add(data(addword, addmean))
                 //Log.d("test",list.toString())
 
                 //recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -67,6 +74,7 @@ class word_fragment : Fragment() {
                 recyclerView.adapter = adapter
                 view.recyclerView.layoutManager = LinearLayoutManager(context)
                 //setArrayList(list)
+
                 myAlertDialog.dismiss()
             }
 
@@ -76,7 +84,7 @@ class word_fragment : Fragment() {
             }
         }
 
-        search_bar.addTextChangedListener(object: TextWatcher{
+        search_bar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -89,10 +97,38 @@ class word_fragment : Fragment() {
 
                 adapter.filter.filter(s)
             }
-        } )
+        })
+      /*  lateinit var mTTs: TextToSpeech
+
+
+        mTTs = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR) {
+                mTTs.language = Locale.UK
+            }
+        })*/
+
+
+        /*speakBtn.setOnClickListener {
+            //get Text
+            val toSpeak = word.text.toString()
+            if (toSpeak == "") {
+                //텍스트가 없을 경우
+                Toast.makeText(context, "단어를 입력해 주세요.", Toast.LENGTH_LONG).show()
+
+            } else {
+                mTTs.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
+
+            }
+        }*/
+
+
+
+
+
 
 
     }
+
 }
 
 

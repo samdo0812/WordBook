@@ -1,10 +1,12 @@
 package com.sdstudio.wordbook
 
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.word_fragment_item.*
 import kotlinx.android.synthetic.main.word_fragment_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -16,11 +18,14 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
      lateinit var list: ArrayList<data>
      lateinit var flist: ArrayList<data>
 
+
+
     @JvmOverloads
     constructor (list: ArrayList<data>){
         this.list = list
         this.flist = list
     }
+
 
 
 
@@ -86,12 +91,42 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
 }
 
 class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+    lateinit var mTTs: TextToSpeech
+
 
     var linearLayout:LinearLayout = itemView.findViewById(R.id.linerLayout)
     var expandableLayout: RelativeLayout = itemView.findViewById(R.id.expandable_layout)
     val word = itemView.findViewById<TextView>(R.id.word)
     val mean = itemView.findViewById<TextView>(R.id.mean)
+    var speakBtn = itemView.findViewById<Button>(R.id.speakBtn)
 
 
 
+
+
+
+    init {
+        mTTs = TextToSpeech(itemView.context, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR) {
+                mTTs.language = Locale.US
+            }
+        })
+
+        speakBtn.setOnClickListener { v: View ->
+            //val position: Int = adapterPosition
+            //Toast.makeText(itemView.context, "test", Toast.LENGTH_LONG).show()
+
+               //get Text
+                val toSpeak = word.text.toString()
+                if (toSpeak == "") {
+                    //텍스트가 없을 경우
+                    Toast.makeText(itemView.context, "단어를 입력해 주세요.", Toast.LENGTH_LONG).show()
+
+                } else {
+                    mTTs.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
+                    Toast.makeText(itemView.context, toSpeak, Toast.LENGTH_LONG).show()
+                }
+
+        }
+    }
 }
