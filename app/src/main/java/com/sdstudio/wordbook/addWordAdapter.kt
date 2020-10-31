@@ -3,9 +3,7 @@ package com.sdstudio.wordbook
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.word_fragment_item.view.*
 import java.util.*
@@ -17,8 +15,6 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
 
      lateinit var list: ArrayList<data>
      lateinit var flist: ArrayList<data>
-
-
 
     @JvmOverloads
     constructor (list: ArrayList<data>){
@@ -41,6 +37,15 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.word.text = flist.get(position).Word
         holder.mean.text = flist.get(position).Mean
+
+        //카드뷰 애니메이션
+        val isExpandable : Boolean = flist[position].expandable
+        holder.expandableLayout.visibility = if (isExpandable) View.VISIBLE else  View.GONE
+        holder.linearLayout.setOnClickListener{
+            val down = flist[position]
+            down.expandable = !down.expandable
+            notifyItemChanged(position)
+        }
     }
 
     /*fun setArraylist(list:ArrayList<data>){
@@ -81,6 +86,9 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
 }
 
 class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+    var linearLayout:LinearLayout = itemView.findViewById(R.id.linerLayout)
+    var expandableLayout: RelativeLayout = itemView.findViewById(R.id.expandable_layout)
     val word = itemView.findViewById<TextView>(R.id.word)
     val mean = itemView.findViewById<TextView>(R.id.mean)
 
