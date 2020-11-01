@@ -1,25 +1,32 @@
 package com.sdstudio.wordbook
 
+import android.content.Context
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_word.*
 import kotlinx.android.synthetic.main.word_fragment_item.*
 import kotlinx.android.synthetic.main.word_fragment_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 //class addWordAdapter(val list: List <data>?) : RecyclerView.Adapter<Holder>() {
-class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
+class addWordAdapter(): RecyclerView.Adapter<Holder>(), Filterable {
 
 
-     var list: ArrayList<data>
-     var flist: ArrayList<data>
+     lateinit var list: ArrayList<data>
+     lateinit var flist: ArrayList<data>
 
     @JvmOverloads
-    constructor (list: ArrayList<data>){
+    constructor (list: ArrayList<data>):this(){
         this.list = list
         this.flist = list
     }
@@ -48,6 +55,13 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
             notifyItemChanged(position)
         }
     }
+
+    fun removeItem(viewHolder: RecyclerView.ViewHolder){
+        flist.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
+    }
+
+
 
     override fun getFilter(): Filter {
 
@@ -79,6 +93,7 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
             }
         }
     }
+
 }
 
 class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -109,5 +124,6 @@ class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
                 }
 
         }
+
     }
 }
