@@ -15,18 +15,14 @@ import kotlin.collections.ArrayList
 class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
 
 
-     lateinit var list: ArrayList<data>
-     lateinit var flist: ArrayList<data>
-
-
+     var list: ArrayList<data>
+     var flist: ArrayList<data>
 
     @JvmOverloads
     constructor (list: ArrayList<data>){
         this.list = list
         this.flist = list
     }
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -52,11 +48,6 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
             notifyItemChanged(position)
         }
     }
-
-    /*fun setArraylist(list:ArrayList<data>){
-        this.list = list
-    }*/
-
 
     override fun getFilter(): Filter {
 
@@ -92,18 +83,11 @@ class addWordAdapter: RecyclerView.Adapter<Holder> , Filterable {
 
 class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
     lateinit var mTTs: TextToSpeech
-
-
     var linearLayout:LinearLayout = itemView.findViewById(R.id.linerLayout)
     var expandableLayout: RelativeLayout = itemView.findViewById(R.id.expandable_layout)
     val word = itemView.findViewById<TextView>(R.id.word)
     val mean = itemView.findViewById<TextView>(R.id.mean)
     var speakBtn = itemView.findViewById<Button>(R.id.speakBtn)
-
-
-
-
-
 
     init {
         mTTs = TextToSpeech(itemView.context, TextToSpeech.OnInitListener { status ->
@@ -113,9 +97,6 @@ class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         })
 
         speakBtn.setOnClickListener { v: View ->
-            //val position: Int = adapterPosition
-            //Toast.makeText(itemView.context, "test", Toast.LENGTH_LONG).show()
-
                //get Text
                 val toSpeak = word.text.toString()
                 if (toSpeak == "") {

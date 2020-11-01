@@ -25,16 +25,7 @@ import kotlin.math.log
 
 
 class word_fragment : Fragment() {
-    //lateinit var addword:String
-    //lateinit var addmean:String /
-    //lateinit var adapter: addWordAdapter
     lateinit var adapter: addWordAdapter
-
-
-
-    //    private val adapter: addWordAdapter by lazy { addWordAdapter() }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +33,6 @@ class word_fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(com.sdstudio.wordbook.R.layout.fragment_word, container, false)
-
-
         return view
     }
 
@@ -63,18 +52,12 @@ class word_fragment : Fragment() {
                 val addmean = mDialog.addmean.text.toString()
 
                 //다이얼로그에 입력한 값
-                //list =  arrayListOf(data(addword,addmean))
                 list.add(data(addword, addmean))
-                //Log.d("test",list.toString())
 
-                //recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-                //recyclerView.adapter = addWordAdapter(list)
                 adapter = addWordAdapter(list)
                 adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
                 view.recyclerView.layoutManager = LinearLayoutManager(context)
-                //setArrayList(list)
-
                 myAlertDialog.dismiss()
             }
 
@@ -98,33 +81,6 @@ class word_fragment : Fragment() {
                 adapter.filter.filter(s)
             }
         })
-      /*  lateinit var mTTs: TextToSpeech
-
-
-        mTTs = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
-            if (status != TextToSpeech.ERROR) {
-                mTTs.language = Locale.UK
-            }
-        })*/
-
-
-        /*speakBtn.setOnClickListener {
-            //get Text
-            val toSpeak = word.text.toString()
-            if (toSpeak == "") {
-                //텍스트가 없을 경우
-                Toast.makeText(context, "단어를 입력해 주세요.", Toast.LENGTH_LONG).show()
-
-            } else {
-                mTTs.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
-
-            }
-        }*/
-
-
-
-
-
 
 
     }
