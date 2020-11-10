@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="wordList"
+        type="com.sdstudio.wordbook.wordMVVM.WordEntity" />
+    
+</data>
+    
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    tools:context=".word_fragment">
+    tools:context=".viewPager2.word_fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/conRoot"
@@ -81,3 +91,5 @@
 
     <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 </LinearLayout>
+
+</layout>

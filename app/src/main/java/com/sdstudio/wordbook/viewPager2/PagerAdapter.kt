@@ -1,4 +1,4 @@
-package com.sdstudio.wordbook
+package com.sdstudio.wordbook.viewPager2
 
 import androidx.fragment.app.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
