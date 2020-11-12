@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -65,7 +66,10 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //room
-    annotationProcessor 'androidx.room:room-compiler:2.2.2'
+    def room_version = "2.2.5"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     def lifecycle_version = "2.2.0"
     // ViewModel
@@ -75,14 +79,10 @@ dependencies {
 
 
 
-    dependencies {
         def fragment_version = "1.2.5"
-
-        // Java language implementation
-        //implementation "androidx.fragment:fragment:$fragment_version"
         // Kotlin
         implementation "androidx.fragment:fragment-ktx:$fragment_version"
         // Testing Fragments in Isolation
         debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
-    }
+
 }
