@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sdstudio.wordbook.R
 import com.sdstudio.wordbook.wordMVVM.WordAdapter
 import com.sdstudio.wordbook.wordMVVM.WordViewModel
@@ -45,7 +47,7 @@ class word_fragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         fab.attachToRecyclerView(recyclerView)
-
+        initSwipe()
 
 
         //ui관찰
@@ -81,7 +83,7 @@ class word_fragment : Fragment() {
                 val addmean = mDialog.addmean.text.toString()
 
                 //wordviewmodel.addWord(addword, addmean)
-                if (!addword.isEmpty() && !addmean.isEmpty()){
+                if (addword.isNotEmpty() && addmean.isNotEmpty()){
                     Thread(Runnable {
                         db!!.wordDAO().insert(WordEntity(addword,addmean))
                     }).start()
@@ -96,13 +98,8 @@ class word_fragment : Fragment() {
             }
         }
 
-       // db = WordDatabase.getInstance()
-        //val layoutManager = LinearLayoutManager(context)
-        //binding.recyclerView.layoutManager = layoutManager
 
-
-
-
+        //필터
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -115,4 +112,28 @@ class word_fragment : Fragment() {
 
     }
 
+    private fun initSwipe(){
+        val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
+        ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                if (direction == ItemTouchHelper.LEFT){
+                    Thread{
+                        adapter?.getItem().get(position)?.let { db!!.wordDAO().delete(it) }
+                    }
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+    }
 }

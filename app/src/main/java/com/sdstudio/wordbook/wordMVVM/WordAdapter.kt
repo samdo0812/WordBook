@@ -30,6 +30,9 @@ class WordAdapter(private var myDataset: List<WordEntity>):RecyclerView.Adapter<
         return myDatasetFilter.size
     }
 
+    fun getItem(): List<WordEntity>{
+        return myDatasetFilter
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.word.text =  myDatasetFilter.get(position).Word
         holder.binding.mean.text = myDatasetFilter.get(position).Mean
