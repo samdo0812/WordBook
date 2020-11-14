@@ -1,6 +1,7 @@
 package com.sdstudio.wordbook.viewPager2
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.text.Editable
@@ -16,6 +17,8 @@ import com.sdstudio.wordbook.R
 import com.sdstudio.wordbook.wordMVVM.WordAdapter
 import com.sdstudio.wordbook.wordMVVM.WordViewModel
 import com.sdstudio.wordbook.databinding.FragmentWordBinding
+import com.sdstudio.wordbook.wordMVVM.WordDatabase
+import com.sdstudio.wordbook.wordMVVM.WordEntity
 import kotlinx.android.synthetic.main.add_word.view.*
 import kotlinx.android.synthetic.main.fragment_word.*
 
@@ -23,7 +26,8 @@ class word_fragment : Fragment() {
 
     private lateinit var binding: FragmentWordBinding
     private val wordviewmodel: WordViewModel by viewModels()
-    private lateinit var mtts:TextToSpeech
+    private var db: WordDatabase? = null
+    lateinit var adapter: WordAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,16 +46,27 @@ class word_fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fab.attachToRecyclerView(recyclerView)
 
+
+
         //ui관찰
-        wordviewmodel.dataLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            (binding.recyclerView.adapter as WordAdapter).setData(it)
-        })
+      //  wordviewmodel.dataLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+       //     (binding.recyclerView.adapter as WordAdapter).setData(it)
+       // })
+
+
 
         binding.recyclerView.apply {
+            db = WordDatabase.getInstance(context)
             layoutManager = LinearLayoutManager(context)
             binding.recyclerView.adapter =
                 WordAdapter(emptyList())
         }
+
+        db!!.wordDAO().getAll().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            //(binding.recyclerView.adapter as WordAdapter).setData(it)
+            adapter = WordAdapter(it)
+            binding.recyclerView.adapter=adapter
+        })
 
         //플로팅버튼
         binding.fab.setOnClickListener {
@@ -65,7 +80,13 @@ class word_fragment : Fragment() {
                 val addword = mDialog.addword.text.toString()
                 val addmean = mDialog.addmean.text.toString()
 
-                wordviewmodel.addWord(addword, addmean)
+                //wordviewmodel.addWord(addword, addmean)
+                if (!addword.isEmpty() && !addmean.isEmpty()){
+                    Thread(Runnable {
+                        db!!.wordDAO().insert(WordEntity(addword,addmean))
+                    }).start()
+                }
+
                 myAlertDialog.dismiss()
             }
 
@@ -74,6 +95,13 @@ class word_fragment : Fragment() {
                 myAlertDialog.dismiss()
             }
         }
+
+       // db = WordDatabase.getInstance()
+        //val layoutManager = LinearLayoutManager(context)
+        //binding.recyclerView.layoutManager = layoutManager
+
+
+
 
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}

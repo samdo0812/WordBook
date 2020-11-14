@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "word")
 data class WordEntity (
-    @PrimaryKey(autoGenerate = true)
+    //@PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     var Word: String,
     var Mean: String,
     var expandable: Boolean = false)
