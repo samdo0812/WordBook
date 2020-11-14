@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,6 +24,7 @@ import com.sdstudio.wordbook.wordMVVM.WordDatabase
 import com.sdstudio.wordbook.wordMVVM.WordEntity
 import kotlinx.android.synthetic.main.add_word.view.*
 import kotlinx.android.synthetic.main.fragment_word.*
+import java.util.*
 
 class word_fragment : Fragment() {
 
@@ -30,6 +32,7 @@ class word_fragment : Fragment() {
     private val wordviewmodel: WordViewModel by viewModels()
     private var db: WordDatabase? = null
     lateinit var adapter: WordAdapter
+    lateinit var mTTs: TextToSpeech
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,31 +47,11 @@ class word_fragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
         fab.attachToRecyclerView(recyclerView)
         initSwipe()
 
 
-        //ui관찰
-      //  wordviewmodel.dataLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-       //     (binding.recyclerView.adapter as WordAdapter).setData(it)
-       // })
-
-
-
-        binding.recyclerView.apply {
-            db = WordDatabase.getInstance(context)
-            layoutManager = LinearLayoutManager(context)
-            binding.recyclerView.adapter =
-                WordAdapter(emptyList())
-        }
-
-        db!!.wordDAO().getAll().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            //(binding.recyclerView.adapter as WordAdapter).setData(it)
-            adapter = WordAdapter(it)
-            binding.recyclerView.adapter=adapter
-        })
 
         //플로팅버튼
         binding.fab.setOnClickListener {
@@ -98,9 +81,20 @@ class word_fragment : Fragment() {
             }
         }
 
+       binding.recyclerView.apply {
+            db = WordDatabase.getInstance(context)
+            layoutManager = LinearLayoutManager(context)
+            binding.recyclerView.adapter = WordAdapter(emptyList())
+        }
+
+        db!!.wordDAO().getAll().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            //(binding.recyclerView.adapter as WordAdapter).setData(it)
+            adapter = WordAdapter(it)
+            binding.recyclerView.adapter = adapter
+        })
 
         //필터
-        binding.searchBar.addTextChangedListener(object : TextWatcher {
+       binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -112,7 +106,9 @@ class word_fragment : Fragment() {
 
     }
 
-    private fun initSwipe(){
+
+  //리사이클러뷰 아이템 스와이프
+  private fun initSwipe(){
         val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
         ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
             override fun onMove(
@@ -127,8 +123,8 @@ class word_fragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 if (direction == ItemTouchHelper.LEFT){
                     Thread{
-                        adapter?.getItem().get(position)?.let { db!!.wordDAO().delete(it) }
-                    }
+                        adapter?.getItem()?.get(position)?.let { db!!.wordDAO().delete(it) }
+                    }.start()
                 }
             }
         }

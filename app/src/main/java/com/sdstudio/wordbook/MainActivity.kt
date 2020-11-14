@@ -29,4 +29,6 @@ class MainActivity : FragmentActivity() {
             tab.text = tabTitles[position]
         }.attach()
     }
+
+
 }

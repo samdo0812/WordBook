@@ -11,14 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.sdstudio.wordbook.databinding.WordFragmentItemBinding
+import kotlinx.android.synthetic.main.word_fragment_item.view.*
 import java.util.*
 
-class WordAdapter(private var myDataset: List<WordEntity>):RecyclerView.Adapter<ViewHolder>(),Filterable{
+class WordAdapter(private var myDataset: List<WordEntity>?):RecyclerView.Adapter<ViewHolder>(), Filterable{
 
-    private lateinit var myDatasetFilter:List<WordEntity>
+    private var myDatasetFilter:List<WordEntity>
+
     init {
-        myDatasetFilter = myDataset
+        myDatasetFilter = this!!.myDataset!!
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding
@@ -27,15 +30,17 @@ class WordAdapter(private var myDataset: List<WordEntity>):RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return myDatasetFilter.size
+        return myDatasetFilter!!.size
     }
 
-    fun getItem(): List<WordEntity>{
+    fun getItem(): List<WordEntity>?{
         return myDatasetFilter
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.word.text =  myDatasetFilter.get(position).Word
-        holder.binding.mean.text = myDatasetFilter.get(position).Mean
+        //holder.binding.word.text =  myDataset!!.get(position).Word
+        //holder.binding.mean.text = myDataset!!.get(position).Mean
+        holder.bind(myDatasetFilter!!.get(position),position)
+
 
         //카드뷰 애니메이션
         val isExpandable : Boolean = myDatasetFilter[position].expandable
@@ -48,22 +53,17 @@ class WordAdapter(private var myDataset: List<WordEntity>):RecyclerView.Adapter<
 
     }
 
-    fun setData(newData: List<WordEntity>){
-        myDataset = newData
-        myDatasetFilter = myDataset
-        notifyDataSetChanged()
-    }
 
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val key: String = constraint.toString()
                 if (key.isEmpty()){
-                    myDatasetFilter = myDataset
+                    myDatasetFilter = myDataset!!
                 }
                 else {
                     val isFiltered = mutableListOf<WordEntity>()
-                    for(row:WordEntity in myDataset){
+                    for(row:WordEntity in myDataset!!){
                         if(row.Word.toLowerCase().contains(key.toLowerCase())) {
                             isFiltered.add(row)
                         }
@@ -88,7 +88,13 @@ class WordAdapter(private var myDataset: List<WordEntity>):RecyclerView.Adapter<
 
 
 class ViewHolder(val binding: WordFragmentItemBinding):RecyclerView.ViewHolder(binding.root){
-    lateinit var mTTs: TextToSpeech
+   lateinit var mTTs: TextToSpeech
+
+    fun bind(myDataset: WordEntity, position: Int){
+        itemView.word.setText(myDataset.Word)
+        itemView.mean.setText(myDataset.Mean)
+
+    }
 
     //tts
     init {
@@ -109,7 +115,8 @@ class ViewHolder(val binding: WordFragmentItemBinding):RecyclerView.ViewHolder(b
                 mTTs.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
                 Toast.makeText(itemView.context, toSpeak, Toast.LENGTH_LONG).show()
             }
+            //mTTs.stop()
+            //mTTs.shutdown()
         }
     }
-
 }
