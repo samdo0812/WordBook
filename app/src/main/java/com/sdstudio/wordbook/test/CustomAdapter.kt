@@ -24,7 +24,7 @@ class CustomAdapter : BaseAdapter{
         var inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         var nameView = inflater.inflate(R.layout.test_fragment_item, null)
-        nameView.image.setImageResource(nameGridList.image!!)
+        //nameView.image.setImageResource(nameGridList.image!!)
         nameView.textView.text = nameGridList.name
         return nameView
     }

@@ -26,21 +26,7 @@ class test_frgment: Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        nameList.add(Item("test",R.drawable.img_intro))
-        nameList.add(Item("test2",R.drawable.img_intro))
-        nameList.add(Item("test3",R.drawable.img_intro))
-        nameList.add(Item("test4",R.drawable.img_intro))
-
-        adapter = CustomAdapter(nameList,context)
-        gridView.adapter = adapter
-
-        gridView.setOnItemClickListener{ adapterView, view, i, l ->
-            Toast.makeText(context,i.toString(),Toast.LENGTH_LONG ).show()
-        }
-    }
 
 
 }
