@@ -1,22 +1,18 @@
 package com.sdstudio.wordbook.viewPager2
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
+import androidx.fragment.app.FragmentManager
 import com.sdstudio.wordbook.R
-import com.sdstudio.wordbook.test.CustomAdapter
-import com.sdstudio.wordbook.test.Item
+import com.sdstudio.wordbook.test.TestActivity
 import kotlinx.android.synthetic.main.fragment_test.*
 
-class test_frgment: Fragment() {
-
-    var adapter:CustomAdapter? = null
-    var nameList = ArrayList<Item>()
-
+class test_fragment: Fragment() {
+    lateinit var fm: FragmentManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +23,14 @@ class test_frgment: Fragment() {
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        test1.setOnClickListener{
+            val intent = Intent(activity, TestActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
 
 }

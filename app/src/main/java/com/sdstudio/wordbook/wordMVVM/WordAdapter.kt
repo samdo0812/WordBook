@@ -14,7 +14,7 @@ import com.sdstudio.wordbook.databinding.WordFragmentItemBinding
 import kotlinx.android.synthetic.main.word_fragment_item.view.*
 import java.util.*
 
-class WordAdapter(private var myDataset: List<WordEntity>?):RecyclerView.Adapter<ViewHolder>(), Filterable{
+class WordAdapter(private var myDataset: List<WordEntity>?):RecyclerView.Adapter<ViewHolder>(){
 
     private var myDatasetFilter:List<WordEntity>
 
@@ -37,86 +37,16 @@ class WordAdapter(private var myDataset: List<WordEntity>?):RecyclerView.Adapter
         return myDatasetFilter
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //holder.binding.word.text =  myDataset!!.get(position).Word
-        //holder.binding.mean.text = myDataset!!.get(position).Mean
         holder.bind(myDatasetFilter!!.get(position),position)
-
-
-        //카드뷰 애니메이션
-        val isExpandable : Boolean = myDatasetFilter[position].expandable
-        holder.binding.expandableLayout.visibility = if (isExpandable) View.VISIBLE else  View.GONE
-        holder.binding.linerLayout.setOnClickListener{
-            val down = myDatasetFilter[position]
-            down.expandable = !down.expandable
-            notifyItemChanged(position)
-        }
-
     }
-
-
-    override fun getFilter(): Filter {
-        return object : Filter(){
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val key: String = constraint.toString()
-                if (key.isEmpty()){
-                    myDatasetFilter = myDataset!!
-                }
-                else {
-                    val isFiltered = mutableListOf<WordEntity>()
-                    for(row:WordEntity in myDataset!!){
-                        if(row.Word.toLowerCase().contains(key.toLowerCase())) {
-                            isFiltered.add(row)
-                        }
-
-                    }
-                    myDatasetFilter = isFiltered
-                }
-                var fil= FilterResults()
-                fil.values = myDatasetFilter
-                return fil
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                myDatasetFilter = results?.values as List<WordEntity>
-                notifyDataSetChanged()
-            }
-
-        }
-    }
-
 }
 
 
 class ViewHolder(val binding: WordFragmentItemBinding):RecyclerView.ViewHolder(binding.root){
-   lateinit var mTTs: TextToSpeech
 
     fun bind(myDataset: WordEntity, position: Int){
         itemView.word.setText(myDataset.Word)
         itemView.mean.setText(myDataset.Mean)
 
-    }
-
-    //tts
-    init {
-        mTTs = TextToSpeech(itemView.context, TextToSpeech.OnInitListener { status ->
-            if (status != TextToSpeech.ERROR) {
-                mTTs.language = Locale.US
-            }
-        })
-
-        binding.speakBtn.setOnClickListener { v: View ->
-            //get Text
-            val toSpeak = binding.word.text.toString()
-            if (toSpeak == "") {
-                //텍스트가 없을 경우
-                Toast.makeText(itemView.context, "단어를 입력해 주세요.", Toast.LENGTH_LONG).show()
-
-            } else {
-                mTTs.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
-                Toast.makeText(itemView.context, toSpeak, Toast.LENGTH_LONG).show()
-            }
-            //mTTs.stop()
-            //mTTs.shutdown()
-        }
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="wordList"
+            type="com.sdstudio.wordbook.wordMVVM.WordEntity" />
+    </data>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#2196F3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".test.Test01Fragment">
+    <TextView
+        android:id="@+id/quiz"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTest01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        />
+
+</LinearLayout>
+</layout>

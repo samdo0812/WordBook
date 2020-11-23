@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sdstudio.wordbook.viewPager2.PagerAdapter
 import com.sdstudio.wordbook.viewPager2.setting_fragment
-import com.sdstudio.wordbook.viewPager2.test_frgment
+import com.sdstudio.wordbook.viewPager2.test_fragment
 import com.sdstudio.wordbook.viewPager2.word_fragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,7 +18,7 @@ class MainActivity : FragmentActivity() {
 
         val adapter = PagerAdapter(this)
         val fragments = listOf<Fragment>(word_fragment(),
-            test_frgment(), setting_fragment()
+            test_fragment(), setting_fragment()
         )
         val tabTitles = listOf<String>("My word", "Test", "Setting")
 

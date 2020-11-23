@@ -1,10 +1,34 @@
 package com.sdstudio.wordbook.wordMVVM
 
+import android.app.Application
 import androidx.lifecycle.LiveData
+import java.lang.Exception
 
-class WordRepository (private val wordDao: WordDAO) {
+class WordRepository (application: Application) {
+    private val wordDatabase = WordDatabase.getInstance(application)!!
+    private val wordDAO = wordDatabase.wordDAO()
+    private val word = wordDAO.getAll()
 
-    val allWord: LiveData<List<WordEntity>> = wordDao.getAll()
+    fun getAll(): LiveData<List<WordEntity>>{
+        return word
+    }
 
-    suspend fun insert(word: WordEntity) { wordDao.insert(word) }
+    fun insert(wordEntity: WordEntity){
+        try {
+            val thread = Thread(Runnable {
+                wordDAO.insert(wordEntity)
+            })
+            thread.start()
+        } catch (e: Exception){}
+    }
+
+    fun delete(wordEntity: WordEntity){
+        try {
+            val thread = Thread(Runnable {
+                wordDAO.delete(wordEntity)
+            })
+            thread.start()
+        }catch (e: Exception){}
+    }
+
 }

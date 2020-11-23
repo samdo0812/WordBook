@@ -1,6 +1,9 @@
 package com.sdstudio.wordbook.wordMVVM
 
+import androidx.annotation.NonNull
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 
@@ -8,6 +11,15 @@ import androidx.room.PrimaryKey
 data class WordEntity (
     //@PrimaryKey(autoGenerate = true)
     @PrimaryKey
+    @ColumnInfo(name = "Word")
     var Word: String,
-    var Mean: String,
-    var expandable: Boolean = false)
+    @ColumnInfo(name = "Mean")
+    var Mean: String
+)
+{
+
+    //constructor(Word: String, Mean: String): this(Word, Mean, false)
+}
+
+
+
